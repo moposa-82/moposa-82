@@ -20,24 +20,15 @@
             border-bottom: 2px solid #2c3e50;
             margin-bottom: 40px;
         }
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
+        h1 { color: #2c3e50; margin-bottom: 10px; }
         h2 {
             color: #34495e;
             border-left: 4px solid #3498db;
             padding-left: 10px;
             margin-top: 40px;
         }
-        .subtitle {
-            color: #7f8c8d;
-            font-size: 1.1em;
-        }
-        .paper-list {
-            list-style-type: none;
-            padding: 0;
-        }
+        .subtitle { color: #7f8c8d; font-size: 1.1em; }
+        .paper-list { list-style-type: none; padding: 0; }
         .paper-item {
             background: #fff;
             padding: 20px;
@@ -57,18 +48,126 @@
             color: #2980b9;
             text-decoration: none;
         }
-        .paper-title:hover {
-            text-decoration: underline;
+        .paper-title:hover { text-decoration: underline; }
+        .paper-meta { font-size: 0.9em; color: #95a5a6; margin-top: 5px; }
+        .paper-abstract { margin-top: 10px; font-size: 0.95em; color: #555; }
+
+        /* 게시판 스타일 */
+        .board-form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
         }
-        .paper-meta {
-            font-size: 0.9em;
-            color: #95a5a6;
-            margin-top: 5px;
-        }
-        .paper-abstract {
-            margin-top: 10px;
+        .board-form input,
+        .board-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
             font-size: 0.95em;
-            color: #555;
+            box-sizing: border-box;
+        }
+        .board-form textarea { height: 80px; resize: vertical; }
+        .board-form button {
+            background: #2c3e50;
+            color: #fff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.2s;
+        }
+        .board-form button:hover { background: #34495e; }
+        .post-item {
+            background: #fff;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .post-meta {
+            font-size: 0.85em;
+            color: #95a5a6;
+            margin-bottom: 5px;
+        }
+        .post-author { font-weight: bold; color: #2c3e50; }
+        .post-content { white-space: pre-wrap; word-break: break-word; }
+        .post-delete {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #bbb;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+        .post-delete:hover { color: #e74c3c; }
+        .board-empty {
+            text-align: center;
+            color: #aaa;
+            padding: 30px;
+        }
+        .delete-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        .delete-modal.active { display: flex; }
+        .delete-modal-inner {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .delete-modal-inner input {
+            width: 200px;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .delete-modal-inner button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .btn-confirm { background: #e74c3c; color: #fff; }
+        .btn-cancel { background: #ecf0f1; color: #333; }
+
+        nav {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        nav a {
+            color: #3498db;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        nav a:hover { text-decoration: underline; }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px 0;
+            border-top: 1px solid #ddd;
+            color: #aaa;
+            font-size: 0.85em;
         }
     </style>
 </head>
@@ -77,6 +176,11 @@
     <header>
         <h1>정충권</h1>
         <div class="subtitle">한국고전문학 연구 아카이브</div>
+        <nav>
+            <a href="#about">소개</a>
+            <a href="#publications">논문</a>
+            <a href="#board">게시판</a>
+        </nav>
     </header>
 
     <section id="about">
@@ -92,9 +196,146 @@
                 <div class="paper-meta">판소리연구 54, 판소리학회 (2022) | KCI 등재지</div>
                 <div class="paper-abstract">1900~1910년대 실내 극장 무대에서 전통공연물 공연자로서 활동한 기생을 중심으로, 창극 공연의 양상과 의의를 살핌. 기생조합이 1910년대 중후반 창극 공연을 주도해 나간 실상을 조명하고, 초기 창극의 갈래적 형식 문제를 고찰함.</div>
             </li>
-
         </ul>
     </section>
+
+    <section id="board">
+        <h2>게시판</h2>
+
+        <div class="board-form">
+            <input type="text" id="postAuthor" placeholder="이름 (비워두면 익명)" maxlength="20">
+            <textarea id="postContent" placeholder="글을 남겨주세요..." maxlength="1000"></textarea>
+            <input type="password" id="postPassword" placeholder="비밀번호 (삭제 시 필요)" maxlength="20">
+            <button onclick="submitPost()">글 쓰기</button>
+        </div>
+
+        <div id="postList"></div>
+        <div id="boardEmpty" class="board-empty" style="display:none;">아직 글이 없습니다. 첫 글을 남겨보세요!</div>
+    </section>
+
+    <!-- 삭제 모달 -->
+    <div class="delete-modal" id="deleteModal">
+        <div class="delete-modal-inner">
+            <p>글을 삭제하려면 비밀번호를 입력하세요</p>
+            <input type="password" id="deletePassword" placeholder="비밀번호">
+            <div>
+                <button class="btn-cancel" onclick="closeDeleteModal()">취소</button>
+                <button class="btn-confirm" onclick="confirmDelete()">삭제</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>© 정충권 – 고전문학연구아카이브</footer>
+
+    <script>
+        const SUPABASE_URL = 'https://assfesxtsicivjzxgfqm.supabase.co/rest/v1';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFzc2Zlc3h0c2ljaXZqenhnZnFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2NzQzODUsImV4cCI6MjA5NTI1MDM4NX0.dd_nGKZmA_w2mvXn7zHEIahEffNRHWmUDvqQtR_2h4E';
+
+        const headers = {
+            'apikey': SUPABASE_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_KEY,
+            'Content-Type': 'application/json'
+        };
+
+        let deleteTargetId = null;
+
+        // 시간 포맷
+        function formatDate(iso) {
+            const d = new Date(iso);
+            const kst = new Date(d.getTime() + 9 * 60 * 60 * 1000);
+            const y = kst.getFullYear();
+            const m = String(kst.getMonth() + 1).padStart(2, '0');
+            const day = String(kst.getDate()).padStart(2, '0');
+            const h = String(kst.getHours()).padStart(2, '0');
+            const min = String(kst.getMinutes()).padStart(2, '0');
+            return y + '.' + m + '.' + day + ' ' + h + ':' + min;
+        }
+
+        // 게시글 불러오기
+        async function loadPosts() {
+            const res = await fetch(SUPABASE_URL + '/posts?select=*&order=created_at.desc&limit=50', { headers });
+            const posts = await res.json();
+            const list = document.getElementById('postList');
+            const empty = document.getElementById('boardEmpty');
+
+            if (!posts.length) {
+                list.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+            empty.style.display = 'none';
+
+            list.innerHTML = posts.map(function(p) {
+                return '<div class="post-item">' +
+                    '<button class="post-delete" onclick="openDeleteModal(' + p.id + ')" title="삭제">✕</button>' +
+                    '<div class="post-meta"><span class="post-author">' + escapeHtml(p.author) + '</span> · ' + formatDate(p.created_at) + '</div>' +
+                    '<div class="post-content">' + escapeHtml(p.content) + '</div>' +
+                    '</div>';
+            }).join('');
+        }
+
+        // 글 쓰기
+        async function submitPost() {
+            const author = document.getElementById('postAuthor').value.trim() || '익명';
+            const content = document.getElementById('postContent').value.trim();
+            const password = document.getElementById('postPassword').value;
+
+            if (!content) { alert('내용을 입력해주세요.'); return; }
+
+            await fetch(SUPABASE_URL + '/posts', {
+                method: 'POST',
+                headers: { ...headers, 'Prefer': 'return=representation' },
+                body: JSON.stringify({ author: author, content: content, password: password || null })
+            });
+
+            document.getElementById('postAuthor').value = '';
+            document.getElementById('postContent').value = '';
+            document.getElementById('postPassword').value = '';
+            loadPosts();
+        }
+
+        // 삭제 모달
+        function openDeleteModal(id) {
+            deleteTargetId = id;
+            document.getElementById('deletePassword').value = '';
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        function closeDeleteModal() {
+            deleteTargetId = null;
+            document.getElementById('deleteModal').classList.remove('active');
+        }
+
+        async function confirmDelete() {
+            const pwd = document.getElementById('deletePassword').value;
+            if (!pwd) { alert('비밀번호를 입력해주세요.'); return; }
+
+            // 먼저 글의 비밀번호 확인
+            const res = await fetch(SUPABASE_URL + '/posts?id=eq.' + deleteTargetId + '&select=password', { headers });
+            const posts = await res.json();
+
+            if (!posts.length) { alert('글을 찾을 수 없습니다.'); closeDeleteModal(); return; }
+            if (posts[0].password !== pwd) { alert('비밀번호가 틀립니다.'); return; }
+
+            await fetch(SUPABASE_URL + '/posts?id=eq.' + deleteTargetId, {
+                method: 'DELETE',
+                headers: headers
+            });
+
+            closeDeleteModal();
+            loadPosts();
+        }
+
+        // XSS 방지
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 페이지 로드 시
+        loadPosts();
+    </script>
 
 </body>
 </html>
